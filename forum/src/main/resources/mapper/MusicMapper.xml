@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.etc.dao.MusicMapper">
+  <resultMap id="BaseResultMap" type="com.etc.entity.Music">
+    <id column="mid" jdbcType="INTEGER" property="mid" />
+    <result column="m_uid" jdbcType="INTEGER" property="mUid" />
+    <result column="mtitle" jdbcType="VARCHAR" property="mtitle" />
+    <result column="mdesc" jdbcType="VARCHAR" property="mdesc" />
+    <result column="murl" jdbcType="VARCHAR" property="murl" />
+    <result column="mstatus" jdbcType="VARCHAR" property="mstatus" />
+    <result column="mimg" jdbcType="VARCHAR" property="mimg" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    mid, m_uid, mtitle, mdesc, murl, mstatus, mimg
+  </sql>
+  <select id="selectByExample" parameterType="com.etc.entity.MusicExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from music
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from music
+    where mid = #{mid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from music
+    where mid = #{mid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.etc.entity.MusicExample">
+    delete from music
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.etc.entity.Music">
+    insert into music (mid, m_uid, mtitle, 
+      mdesc, murl, mstatus, 
+      mimg)
+    values (#{mid,jdbcType=INTEGER}, #{mUid,jdbcType=INTEGER}, #{mtitle,jdbcType=VARCHAR}, 
+      #{mdesc,jdbcType=VARCHAR}, #{murl,jdbcType=VARCHAR}, #{mstatus,jdbcType=VARCHAR}, 
+      #{mimg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etc.entity.Music">
+    insert into music
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mid != null">
+        mid,
+      </if>
+      <if test="mUid != null">
+        m_uid,
+      </if>
+      <if test="mtitle != null">
+        mtitle,
+      </if>
+      <if test="mdesc != null">
+        mdesc,
+      </if>
+      <if test="murl != null">
+        murl,
+      </if>
+      <if test="mstatus != null">
+        mstatus,
+      </if>
+      <if test="mimg != null">
+        mimg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mid != null">
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="mUid != null">
+        #{mUid,jdbcType=INTEGER},
+      </if>
+      <if test="mtitle != null">
+        #{mtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="mdesc != null">
+        #{mdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="murl != null">
+        #{murl,jdbcType=VARCHAR},
+      </if>
+      <if test="mstatus != null">
+        #{mstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="mimg != null">
+        #{mimg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.etc.entity.MusicExample" resultType="java.lang.Long">
+    select count(*) from music
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update music
+    <set>
+      <if test="record.mid != null">
+        mid = #{record.mid,jdbcType=INTEGER},
+      </if>
+      <if test="record.mUid != null">
+        m_uid = #{record.mUid,jdbcType=INTEGER},
+      </if>
+      <if test="record.mtitle != null">
+        mtitle = #{record.mtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mdesc != null">
+        mdesc = #{record.mdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.murl != null">
+        murl = #{record.murl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mstatus != null">
+        mstatus = #{record.mstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mimg != null">
+        mimg = #{record.mimg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update music
+    set mid = #{record.mid,jdbcType=INTEGER},
+      m_uid = #{record.mUid,jdbcType=INTEGER},
+      mtitle = #{record.mtitle,jdbcType=VARCHAR},
+      mdesc = #{record.mdesc,jdbcType=VARCHAR},
+      murl = #{record.murl,jdbcType=VARCHAR},
+      mstatus = #{record.mstatus,jdbcType=VARCHAR},
+      mimg = #{record.mimg,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etc.entity.Music">
+    update music
+    <set>
+      <if test="mUid != null">
+        m_uid = #{mUid,jdbcType=INTEGER},
+      </if>
+      <if test="mtitle != null">
+        mtitle = #{mtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="mdesc != null">
+        mdesc = #{mdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="murl != null">
+        murl = #{murl,jdbcType=VARCHAR},
+      </if>
+      <if test="mstatus != null">
+        mstatus = #{mstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="mimg != null">
+        mimg = #{mimg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etc.entity.Music">
+    update music
+    set m_uid = #{mUid,jdbcType=INTEGER},
+      mtitle = #{mtitle,jdbcType=VARCHAR},
+      mdesc = #{mdesc,jdbcType=VARCHAR},
+      murl = #{murl,jdbcType=VARCHAR},
+      mstatus = #{mstatus,jdbcType=VARCHAR},
+      mimg = #{mimg,jdbcType=VARCHAR}
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+</mapper>

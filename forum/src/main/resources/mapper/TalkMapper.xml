@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.etc.dao.TalkMapper">
+  <resultMap id="BaseResultMap" type="com.etc.entity.Talk">
+    <id column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="t_uid" jdbcType="INTEGER" property="tUid" />
+    <result column="ttalkinfo" jdbcType="VARCHAR" property="ttalkinfo" />
+    <result column="ttalkuser" jdbcType="VARCHAR" property="ttalkuser" />
+    <result column="ttoid" jdbcType="VARCHAR" property="ttoid" />
+    <result column="tcategory" jdbcType="VARCHAR" property="tcategory" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    tid, t_uid, ttalkinfo, ttalkuser, ttoid, tcategory
+  </sql>
+  <select id="selectByExample" parameterType="com.etc.entity.TalkExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from talk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from talk
+    where tid = #{tid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from talk
+    where tid = #{tid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.etc.entity.TalkExample">
+    delete from talk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.etc.entity.Talk">
+    insert into talk (tid, t_uid, ttalkinfo, 
+      ttalkuser, ttoid, tcategory
+      )
+    values (#{tid,jdbcType=INTEGER}, #{tUid,jdbcType=INTEGER}, #{ttalkinfo,jdbcType=VARCHAR}, 
+      #{ttalkuser,jdbcType=VARCHAR}, #{ttoid,jdbcType=VARCHAR}, #{tcategory,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.etc.entity.Talk">
+    insert into talk
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        tid,
+      </if>
+      <if test="tUid != null">
+        t_uid,
+      </if>
+      <if test="ttalkinfo != null">
+        ttalkinfo,
+      </if>
+      <if test="ttalkuser != null">
+        ttalkuser,
+      </if>
+      <if test="ttoid != null">
+        ttoid,
+      </if>
+      <if test="tcategory != null">
+        tcategory,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="tUid != null">
+        #{tUid,jdbcType=INTEGER},
+      </if>
+      <if test="ttalkinfo != null">
+        #{ttalkinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="ttalkuser != null">
+        #{ttalkuser,jdbcType=VARCHAR},
+      </if>
+      <if test="ttoid != null">
+        #{ttoid,jdbcType=VARCHAR},
+      </if>
+      <if test="tcategory != null">
+        #{tcategory,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.etc.entity.TalkExample" resultType="java.lang.Long">
+    select count(*) from talk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update talk
+    <set>
+      <if test="record.tid != null">
+        tid = #{record.tid,jdbcType=INTEGER},
+      </if>
+      <if test="record.tUid != null">
+        t_uid = #{record.tUid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ttalkinfo != null">
+        ttalkinfo = #{record.ttalkinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ttalkuser != null">
+        ttalkuser = #{record.ttalkuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ttoid != null">
+        ttoid = #{record.ttoid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tcategory != null">
+        tcategory = #{record.tcategory,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update talk
+    set tid = #{record.tid,jdbcType=INTEGER},
+      t_uid = #{record.tUid,jdbcType=INTEGER},
+      ttalkinfo = #{record.ttalkinfo,jdbcType=VARCHAR},
+      ttalkuser = #{record.ttalkuser,jdbcType=VARCHAR},
+      ttoid = #{record.ttoid,jdbcType=VARCHAR},
+      tcategory = #{record.tcategory,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etc.entity.Talk">
+    update talk
+    <set>
+      <if test="tUid != null">
+        t_uid = #{tUid,jdbcType=INTEGER},
+      </if>
+      <if test="ttalkinfo != null">
+        ttalkinfo = #{ttalkinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="ttalkuser != null">
+        ttalkuser = #{ttalkuser,jdbcType=VARCHAR},
+      </if>
+      <if test="ttoid != null">
+        ttoid = #{ttoid,jdbcType=VARCHAR},
+      </if>
+      <if test="tcategory != null">
+        tcategory = #{tcategory,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etc.entity.Talk">
+    update talk
+    set t_uid = #{tUid,jdbcType=INTEGER},
+      ttalkinfo = #{ttalkinfo,jdbcType=VARCHAR},
+      ttalkuser = #{ttalkuser,jdbcType=VARCHAR},
+      ttoid = #{ttoid,jdbcType=VARCHAR},
+      tcategory = #{tcategory,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+</mapper>

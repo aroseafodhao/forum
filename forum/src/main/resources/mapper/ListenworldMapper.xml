@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.etc.dao.ListenworldMapper">
+  <resultMap id="BaseResultMap" type="com.etc.entity.Listenworld">
+    <id column="lid" jdbcType="INTEGER" property="lid" />
+    <result column="l_uid" jdbcType="INTEGER" property="lUid" />
+    <result column="lcount" jdbcType="INTEGER" property="lcount" />
+    <result column="limg" jdbcType="VARCHAR" property="limg" />
+    <result column="ldes" jdbcType="VARCHAR" property="ldes" />
+    <result column="lcreatetime" jdbcType="VARCHAR" property="lcreatetime" />
+    <result column="lpageview" jdbcType="INTEGER" property="lpageview" />
+    <result column="lcategory" jdbcType="VARCHAR" property="lcategory" />
+    <result column="lstatus" jdbcType="BIT" property="lstatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    lid, l_uid, lcount, limg, ldes, lcreatetime, lpageview, lcategory, lstatus
+  </sql>
+  <select id="selectByExample" parameterType="com.etc.entity.ListenworldExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from listenworld
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from listenworld
+    where lid = #{lid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from listenworld
+    where lid = #{lid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.etc.entity.ListenworldExample">
+    delete from listenworld
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.etc.entity.Listenworld">
+    insert into listenworld (lid, l_uid, lcount, 
+      limg, ldes, lcreatetime, 
+      lpageview, lcategory, lstatus
+      )
+    values (#{lid,jdbcType=INTEGER}, #{lUid,jdbcType=INTEGER}, #{lcount,jdbcType=INTEGER}, 
+      #{limg,jdbcType=VARCHAR}, #{ldes,jdbcType=VARCHAR}, #{lcreatetime,jdbcType=VARCHAR}, 
+      #{lpageview,jdbcType=INTEGER}, #{lcategory,jdbcType=VARCHAR}, #{lstatus,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.etc.entity.Listenworld">
+    insert into listenworld
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lid != null">
+        lid,
+      </if>
+      <if test="lUid != null">
+        l_uid,
+      </if>
+      <if test="lcount != null">
+        lcount,
+      </if>
+      <if test="limg != null">
+        limg,
+      </if>
+      <if test="ldes != null">
+        ldes,
+      </if>
+      <if test="lcreatetime != null">
+        lcreatetime,
+      </if>
+      <if test="lpageview != null">
+        lpageview,
+      </if>
+      <if test="lcategory != null">
+        lcategory,
+      </if>
+      <if test="lstatus != null">
+        lstatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lid != null">
+        #{lid,jdbcType=INTEGER},
+      </if>
+      <if test="lUid != null">
+        #{lUid,jdbcType=INTEGER},
+      </if>
+      <if test="lcount != null">
+        #{lcount,jdbcType=INTEGER},
+      </if>
+      <if test="limg != null">
+        #{limg,jdbcType=VARCHAR},
+      </if>
+      <if test="ldes != null">
+        #{ldes,jdbcType=VARCHAR},
+      </if>
+      <if test="lcreatetime != null">
+        #{lcreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="lpageview != null">
+        #{lpageview,jdbcType=INTEGER},
+      </if>
+      <if test="lcategory != null">
+        #{lcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="lstatus != null">
+        #{lstatus,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.etc.entity.ListenworldExample" resultType="java.lang.Long">
+    select count(*) from listenworld
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update listenworld
+    <set>
+      <if test="record.lid != null">
+        lid = #{record.lid,jdbcType=INTEGER},
+      </if>
+      <if test="record.lUid != null">
+        l_uid = #{record.lUid,jdbcType=INTEGER},
+      </if>
+      <if test="record.lcount != null">
+        lcount = #{record.lcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.limg != null">
+        limg = #{record.limg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ldes != null">
+        ldes = #{record.ldes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lcreatetime != null">
+        lcreatetime = #{record.lcreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpageview != null">
+        lpageview = #{record.lpageview,jdbcType=INTEGER},
+      </if>
+      <if test="record.lcategory != null">
+        lcategory = #{record.lcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lstatus != null">
+        lstatus = #{record.lstatus,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update listenworld
+    set lid = #{record.lid,jdbcType=INTEGER},
+      l_uid = #{record.lUid,jdbcType=INTEGER},
+      lcount = #{record.lcount,jdbcType=INTEGER},
+      limg = #{record.limg,jdbcType=VARCHAR},
+      ldes = #{record.ldes,jdbcType=VARCHAR},
+      lcreatetime = #{record.lcreatetime,jdbcType=VARCHAR},
+      lpageview = #{record.lpageview,jdbcType=INTEGER},
+      lcategory = #{record.lcategory,jdbcType=VARCHAR},
+      lstatus = #{record.lstatus,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etc.entity.Listenworld">
+    update listenworld
+    <set>
+      <if test="lUid != null">
+        l_uid = #{lUid,jdbcType=INTEGER},
+      </if>
+      <if test="lcount != null">
+        lcount = #{lcount,jdbcType=INTEGER},
+      </if>
+      <if test="limg != null">
+        limg = #{limg,jdbcType=VARCHAR},
+      </if>
+      <if test="ldes != null">
+        ldes = #{ldes,jdbcType=VARCHAR},
+      </if>
+      <if test="lcreatetime != null">
+        lcreatetime = #{lcreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="lpageview != null">
+        lpageview = #{lpageview,jdbcType=INTEGER},
+      </if>
+      <if test="lcategory != null">
+        lcategory = #{lcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="lstatus != null">
+        lstatus = #{lstatus,jdbcType=BIT},
+      </if>
+    </set>
+    where lid = #{lid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etc.entity.Listenworld">
+    update listenworld
+    set l_uid = #{lUid,jdbcType=INTEGER},
+      lcount = #{lcount,jdbcType=INTEGER},
+      limg = #{limg,jdbcType=VARCHAR},
+      ldes = #{ldes,jdbcType=VARCHAR},
+      lcreatetime = #{lcreatetime,jdbcType=VARCHAR},
+      lpageview = #{lpageview,jdbcType=INTEGER},
+      lcategory = #{lcategory,jdbcType=VARCHAR},
+      lstatus = #{lstatus,jdbcType=BIT}
+    where lid = #{lid,jdbcType=INTEGER}
+  </update>
+</mapper>

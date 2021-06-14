@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.etc.dao.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.etc.entity.Article">
+    <id column="aid" jdbcType="INTEGER" property="aid" />
+    <result column="a_uid" jdbcType="INTEGER" property="aUid" />
+    <result column="ascore" jdbcType="INTEGER" property="ascore" />
+    <result column="astatus" jdbcType="BIT" property="astatus" />
+    <result column="apageview" jdbcType="INTEGER" property="apageview" />
+    <result column="aimage" jdbcType="VARCHAR" property="aimage" />
+    <result column="a_adid" jdbcType="INTEGER" property="aAdid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    aid, a_uid, ascore, astatus, apageview, aimage, a_adid
+  </sql>
+  <select id="selectByExample" parameterType="com.etc.entity.ArticleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from article
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from article
+    where aid = #{aid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from article
+    where aid = #{aid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.etc.entity.ArticleExample">
+    delete from article
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.etc.entity.Article">
+    insert into article (aid, a_uid, ascore, 
+      astatus, apageview, aimage, 
+      a_adid)
+    values (#{aid,jdbcType=INTEGER}, #{aUid,jdbcType=INTEGER}, #{ascore,jdbcType=INTEGER}, 
+      #{astatus,jdbcType=BIT}, #{apageview,jdbcType=INTEGER}, #{aimage,jdbcType=VARCHAR}, 
+      #{aAdid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etc.entity.Article">
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="aid != null">
+        aid,
+      </if>
+      <if test="aUid != null">
+        a_uid,
+      </if>
+      <if test="ascore != null">
+        ascore,
+      </if>
+      <if test="astatus != null">
+        astatus,
+      </if>
+      <if test="apageview != null">
+        apageview,
+      </if>
+      <if test="aimage != null">
+        aimage,
+      </if>
+      <if test="aAdid != null">
+        a_adid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="aid != null">
+        #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="aUid != null">
+        #{aUid,jdbcType=INTEGER},
+      </if>
+      <if test="ascore != null">
+        #{ascore,jdbcType=INTEGER},
+      </if>
+      <if test="astatus != null">
+        #{astatus,jdbcType=BIT},
+      </if>
+      <if test="apageview != null">
+        #{apageview,jdbcType=INTEGER},
+      </if>
+      <if test="aimage != null">
+        #{aimage,jdbcType=VARCHAR},
+      </if>
+      <if test="aAdid != null">
+        #{aAdid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.etc.entity.ArticleExample" resultType="java.lang.Long">
+    select count(*) from article
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update article
+    <set>
+      <if test="record.aid != null">
+        aid = #{record.aid,jdbcType=INTEGER},
+      </if>
+      <if test="record.aUid != null">
+        a_uid = #{record.aUid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ascore != null">
+        ascore = #{record.ascore,jdbcType=INTEGER},
+      </if>
+      <if test="record.astatus != null">
+        astatus = #{record.astatus,jdbcType=BIT},
+      </if>
+      <if test="record.apageview != null">
+        apageview = #{record.apageview,jdbcType=INTEGER},
+      </if>
+      <if test="record.aimage != null">
+        aimage = #{record.aimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aAdid != null">
+        a_adid = #{record.aAdid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update article
+    set aid = #{record.aid,jdbcType=INTEGER},
+      a_uid = #{record.aUid,jdbcType=INTEGER},
+      ascore = #{record.ascore,jdbcType=INTEGER},
+      astatus = #{record.astatus,jdbcType=BIT},
+      apageview = #{record.apageview,jdbcType=INTEGER},
+      aimage = #{record.aimage,jdbcType=VARCHAR},
+      a_adid = #{record.aAdid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etc.entity.Article">
+    update article
+    <set>
+      <if test="aUid != null">
+        a_uid = #{aUid,jdbcType=INTEGER},
+      </if>
+      <if test="ascore != null">
+        ascore = #{ascore,jdbcType=INTEGER},
+      </if>
+      <if test="astatus != null">
+        astatus = #{astatus,jdbcType=BIT},
+      </if>
+      <if test="apageview != null">
+        apageview = #{apageview,jdbcType=INTEGER},
+      </if>
+      <if test="aimage != null">
+        aimage = #{aimage,jdbcType=VARCHAR},
+      </if>
+      <if test="aAdid != null">
+        a_adid = #{aAdid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etc.entity.Article">
+    update article
+    set a_uid = #{aUid,jdbcType=INTEGER},
+      ascore = #{ascore,jdbcType=INTEGER},
+      astatus = #{astatus,jdbcType=BIT},
+      apageview = #{apageview,jdbcType=INTEGER},
+      aimage = #{aimage,jdbcType=VARCHAR},
+      a_adid = #{aAdid,jdbcType=INTEGER}
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+</mapper>

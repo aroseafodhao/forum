@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.etc.dao.JokeMapper">
+  <resultMap id="BaseResultMap" type="com.etc.entity.Joke">
+    <id column="jid" jdbcType="INTEGER" property="jid" />
+    <result column="j_uid" jdbcType="INTEGER" property="jUid" />
+    <result column="jstatus" jdbcType="VARCHAR" property="jstatus" />
+    <result column="jdesc" jdbcType="VARCHAR" property="jdesc" />
+    <result column="jlike" jdbcType="INTEGER" property="jlike" />
+    <result column="junlike" jdbcType="INTEGER" property="junlike" />
+    <result column="jimg" jdbcType="VARCHAR" property="jimg" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    jid, j_uid, jstatus, jdesc, jlike, junlike, jimg
+  </sql>
+  <select id="selectByExample" parameterType="com.etc.entity.JokeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from joke
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from joke
+    where jid = #{jid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from joke
+    where jid = #{jid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.etc.entity.JokeExample">
+    delete from joke
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.etc.entity.Joke">
+    insert into joke (jid, j_uid, jstatus, 
+      jdesc, jlike, junlike, 
+      jimg)
+    values (#{jid,jdbcType=INTEGER}, #{jUid,jdbcType=INTEGER}, #{jstatus,jdbcType=VARCHAR}, 
+      #{jdesc,jdbcType=VARCHAR}, #{jlike,jdbcType=INTEGER}, #{junlike,jdbcType=INTEGER}, 
+      #{jimg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.etc.entity.Joke">
+    insert into joke
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jid != null">
+        jid,
+      </if>
+      <if test="jUid != null">
+        j_uid,
+      </if>
+      <if test="jstatus != null">
+        jstatus,
+      </if>
+      <if test="jdesc != null">
+        jdesc,
+      </if>
+      <if test="jlike != null">
+        jlike,
+      </if>
+      <if test="junlike != null">
+        junlike,
+      </if>
+      <if test="jimg != null">
+        jimg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jid != null">
+        #{jid,jdbcType=INTEGER},
+      </if>
+      <if test="jUid != null">
+        #{jUid,jdbcType=INTEGER},
+      </if>
+      <if test="jstatus != null">
+        #{jstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="jdesc != null">
+        #{jdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="jlike != null">
+        #{jlike,jdbcType=INTEGER},
+      </if>
+      <if test="junlike != null">
+        #{junlike,jdbcType=INTEGER},
+      </if>
+      <if test="jimg != null">
+        #{jimg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.etc.entity.JokeExample" resultType="java.lang.Long">
+    select count(*) from joke
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update joke
+    <set>
+      <if test="record.jid != null">
+        jid = #{record.jid,jdbcType=INTEGER},
+      </if>
+      <if test="record.jUid != null">
+        j_uid = #{record.jUid,jdbcType=INTEGER},
+      </if>
+      <if test="record.jstatus != null">
+        jstatus = #{record.jstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jdesc != null">
+        jdesc = #{record.jdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jlike != null">
+        jlike = #{record.jlike,jdbcType=INTEGER},
+      </if>
+      <if test="record.junlike != null">
+        junlike = #{record.junlike,jdbcType=INTEGER},
+      </if>
+      <if test="record.jimg != null">
+        jimg = #{record.jimg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update joke
+    set jid = #{record.jid,jdbcType=INTEGER},
+      j_uid = #{record.jUid,jdbcType=INTEGER},
+      jstatus = #{record.jstatus,jdbcType=VARCHAR},
+      jdesc = #{record.jdesc,jdbcType=VARCHAR},
+      jlike = #{record.jlike,jdbcType=INTEGER},
+      junlike = #{record.junlike,jdbcType=INTEGER},
+      jimg = #{record.jimg,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.etc.entity.Joke">
+    update joke
+    <set>
+      <if test="jUid != null">
+        j_uid = #{jUid,jdbcType=INTEGER},
+      </if>
+      <if test="jstatus != null">
+        jstatus = #{jstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="jdesc != null">
+        jdesc = #{jdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="jlike != null">
+        jlike = #{jlike,jdbcType=INTEGER},
+      </if>
+      <if test="junlike != null">
+        junlike = #{junlike,jdbcType=INTEGER},
+      </if>
+      <if test="jimg != null">
+        jimg = #{jimg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where jid = #{jid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.etc.entity.Joke">
+    update joke
+    set j_uid = #{jUid,jdbcType=INTEGER},
+      jstatus = #{jstatus,jdbcType=VARCHAR},
+      jdesc = #{jdesc,jdbcType=VARCHAR},
+      jlike = #{jlike,jdbcType=INTEGER},
+      junlike = #{junlike,jdbcType=INTEGER},
+      jimg = #{jimg,jdbcType=VARCHAR}
+    where jid = #{jid,jdbcType=INTEGER}
+  </update>
+</mapper>
